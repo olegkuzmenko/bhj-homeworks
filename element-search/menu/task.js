@@ -10,11 +10,7 @@ allMenu.forEach((node) => {
       active.classList.remove('menu_active');
     }
 
-    if (!node.nextElementSibling.classList.contains('menu_active')) {
-      node.nextElementSibling.classList.add('menu_active');
-    } else {
-      node.nextElementSibling.classList.remove('menu_active');
-    }
+    node.nextElementSibling.classList.toggle('menu_active');
     return false;
   }
 })
