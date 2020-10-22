@@ -8,6 +8,7 @@ class Game {
 
     this.reset();
     this.registerEvents();
+    this.setTimer();
   }
 
   reset() {
@@ -19,19 +20,17 @@ class Game {
   setTimer() {
     this.timerElement.textContent = this.wordElement.textContent.length;
     this.timerId = setInterval(() => {
-      this.timerElement.textContent= Number(this.timerElement.textContent) - 1;
+      this.timerElement.textContent = Number(this.timerElement.textContent) - 1;
       if (Number(this.timerElement.textContent) === 0) {
         clearInterval(this.timerId)
         this.fail();
       }
     }, 1000)
-
   }
 
 
 
   registerEvents() {
-
     const checkTypedSym = (event) => {
       const typedSym = event.key;
       if (typedSym.toLowerCase() === this.currentSymbol.textContent) {
@@ -40,17 +39,7 @@ class Game {
         this.fail();
       }
     }
-
     document.addEventListener('keypress', checkTypedSym);
-
-
-    /*
-      TODO:
-      Написать обработчик события, который откликается
-      на каждый введённый символ.
-      В случае правильного ввода слова вызываем this.success()
-      При неправильном вводе символа - this.fail();
-     */
   }
 
   success() {
@@ -65,6 +54,8 @@ class Game {
       this.reset();
     }
     this.setNewWord();
+    clearInterval(this.timerId)
+    this.setTimer()
   }
 
   fail() {
@@ -73,12 +64,13 @@ class Game {
       this.reset();
     }
     this.setNewWord();
+    clearInterval(this.timerId)
+    this.setTimer()
   }
 
   setNewWord() {
     const word = this.getWord();
     this.renderWord(word);
-    this.setTimer();
   }
 
   getWord() {
