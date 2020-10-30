@@ -8,20 +8,22 @@ const removeTask = function() {
   this.closest('.task').remove()
 }
 
+
 const setTask = (event) => {
-  
-  if (event.key === 'Enter' && task.value !== '') {
+  if (event.key === 'Enter') {
     event.preventDefault();
-    list.innerHTML += `
-    <div class="task">
-      <div class="task__title">
-        ${task.value}
+    if (task.value !== '') {
+      list.insertAdjacentHTML("afterbegin", `
+      <div class="task">
+        <div class="task__title">
+          ${task.value}
+        </div>
+        <a href="#" class="task__remove">&times;</a>
       </div>
-      <a href="#" class="task__remove">&times;</a>
-    </div>
-    `;
-    task.value = '';
-    list.querySelector('.task').addEventListener('click', removeTask)
+      `) 
+      task.value = '';
+      list.querySelector('.task__remove').addEventListener('click', removeTask)
+    }
   }
 };
 

@@ -1,49 +1,21 @@
 const adders = Array.from(document.querySelectorAll('.product__quantity-control_inc'));
 const subtractors = Array.from(document.querySelectorAll('.product__quantity-control_dec'));
-const quantity = Array.from(document.querySelectorAll('.product__quantity-value'))
 const cart = document.querySelector('.cart__products')
+const buttons = Array.from(document.querySelectorAll('.product__add'))
+
 
 const addition = function() {
   this.previousElementSibling.textContent = Number(this.previousElementSibling.textContent) + 1;
-  this.closest('.product');
-  addProductToCart(this)
 }
 
-const subtracting = function() {
-  const previousQuantity = Number(this.nextElementSibling.textContent)
+const addProductToCart = function() {
+  const list = Array.from(cart.querySelectorAll('.cart__product'))
+  const quantity = this.closest('.product').querySelector('.product__quantity-value').textContent
   const id = this.closest('.product').getAttribute('data-id');
-  const list = Array.from(cart.querySelectorAll('.cart__product'))
-  const index = list.findIndex(item => item.getAttribute('data-id') === id);
-  console.log(index)
-  if (previousQuantity === 1) {
-    removeProductFromCart(index);
-  } else {
-    this.nextElementSibling.textContent = previousQuantity - 1;
-    const quantity = this.nextElementSibling.textContent
-    list[index].querySelector('.cart__product-count').textContent = quantity;
-  }
-
-}
-
-adders.forEach(item => {
-  item.addEventListener('click', addition)
-})
-
-subtractors.forEach(item => {
-  item.addEventListener('click', subtracting)
-})
-
-
-
-
-const addProductToCart = function(node) {
-  const list = Array.from(cart.querySelectorAll('.cart__product'))
-  const quantity = node.previousElementSibling.textContent
-  const id = node.closest('.product').getAttribute('data-id');
-  const src = node.closest('.product').querySelector('.product__image').getAttribute('src');
+  const src = this.closest('.product').querySelector('.product__image').getAttribute('src');
   const index = list.findIndex(item => item.getAttribute('data-id') === id);
   if (index !== -1) {
-    list[index].querySelector('.cart__product-count').textContent = quantity;
+    list[index].querySelector('.cart__product-count').textContent = Number(list[index].querySelector('.cart__product-count').textContent) + Number(quantity);
   } else {
     cart.innerHTML += `
     <div class="cart__product" data-id="${id}">
@@ -52,11 +24,29 @@ const addProductToCart = function(node) {
     </div>
     `;
   }
+  this.closest('.product').querySelector('.product__quantity-value').textContent = 1;
 }
 
-
-const removeProductFromCart = function(index) {
-  const actualCart = document.getElementsByClassName('cart__products')
-  actualCart[index].remove();
+const subtracting = function() {
+  const previousQuantity = Number(this.nextElementSibling.textContent)
+  if (previousQuantity !== 1) {
+    this.nextElementSibling.textContent = previousQuantity - 1;
+  }
 }
+
+adders.forEach(item => {
+  item.addEventListener('click', addition)
+})
+
+buttons.forEach(item => {
+  item.addEventListener('click', addProductToCart)
+
+})
+
+subtractors.forEach(item => {
+  item.addEventListener('click', subtracting)
+})
+
+
+
 
