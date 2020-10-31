@@ -10,7 +10,7 @@ const removeTask = function() {
 
 
 const setTask = (event) => {
-  if (event.key === 'Enter') {
+  if (event.key === 'Enter' || event.type === 'click') {
     event.preventDefault();
     if (task.value !== '') {
       list.insertAdjacentHTML("afterbegin", `
@@ -28,5 +28,6 @@ const setTask = (event) => {
 };
 
 document.addEventListener('keydown', setTask)
+button.addEventListener('click', setTask)
 
 
