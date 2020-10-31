@@ -4,7 +4,6 @@ const button = document.querySelector('.tasks__add')
 
 
 const removeTask = function() {
-  console.log(this)
   this.closest('.task').remove()
 }
 
