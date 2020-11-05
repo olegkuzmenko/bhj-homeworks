@@ -7,11 +7,11 @@ file.addEventListener('submit', (e) => {
   
   xhr.upload.onprogress = function (event) {
     const progress = document.getElementById( 'progress' );
-    progress.value += event.loaded / event.total ; 
+    progress.value = event.loaded / event.total ; 
   }
 
   xhr.send(formData)
-  
+
   e.preventDefault()
 
 });
