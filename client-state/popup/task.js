@@ -1,8 +1,5 @@
 const modal = document.querySelector('.modal')
-
 const modalClose = document.querySelector('.modal__close')
-
-
 
 const getCookie = (name) => {
   const value= "; " + document.cookie;
@@ -16,19 +13,17 @@ const getCookie = (name) => {
   return null;
 }
 
-localStorage.modalStatus = 'modal_active';
 
 const setModalStatus = () => {
-  if (getCookie('modalstatus')) {
-    modal.classList.remove('modal_active')
-  };
-}
+  if (!getCookie('modalstatus')) {
+    modal.classList.add('modal_active');
+  }
+};
 
 const closeModal = () => {
   modal.classList.remove('modal_active');
-  document.cookie = 'modalstatus=closed'
-}
+  document.cookie = 'modalstatus=closed';
+};
 
 window.addEventListener('load', setModalStatus);
-
-modalClose.addEventListener('click', closeModal)
+modalClose.addEventListener('click', closeModal);

@@ -6,7 +6,7 @@ const saveLocal = () => {
 }
 
 const setContent = () => {
-  editor.value = localStorage.text;
+  editor.value = localStorage.getItem('text');
 }
 
 const clearAll = () => {
